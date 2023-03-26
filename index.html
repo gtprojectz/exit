@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Dismiss Test on Tab Switch</title>
+    <title>Exit Current Tab on Tab Switch</title>
     <script>
-      var testDismissed = false;
-
-      function dismissTest() {
-        if (!testDismissed) {
-          alert('Test dismissed!');
-          testDismissed = true;
-        }
-      }
-
       document.addEventListener("visibilitychange", function() {
         if (document.hidden) {
-          dismissTest();
+          var shouldUnload = confirm("Are you sure you want to leave this page?");
+          if (shouldUnload) {
+            window.location.href = "about:blank";
+          } else {
+            document.visibilityState = "visible";
+          }
+        }
+      });
+
+      window.addEventListener("beforeunload", function(event) {
+        if (document.visibilityState === "hidden") {
+          event.preventDefault();
+          event.returnValue = "";
         }
       });
     </script>
   </head>
   <body>
-    <h1>Dismiss Test on Tab Switch</h1>
-    <p>This test will be dismissed if you switch to another tab.</p>
+    <h1>Exit Current Tab on Tab Switch</h1>
+    <p>This page will ask you if you want to leave when you switch to another tab.</p>
   </body>
 </html>
