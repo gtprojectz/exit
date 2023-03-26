@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dismiss Test on Tab Switch</title>
+    <script>
+      var testDismissed = false;
+
+      function dismissTest() {
+        if (!testDismissed) {
+          alert('Test dismissed!');
+          testDismissed = true;
+        }
+      }
+
+      document.addEventListener("visibilitychange", function() {
+        if (document.hidden) {
+          dismissTest();
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Dismiss Test on Tab Switch</h1>
+    <p>This test will be dismissed if you switch to another tab.</p>
+  </body>
+</html>
